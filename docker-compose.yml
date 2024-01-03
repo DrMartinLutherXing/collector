@@ -1,0 +1,13 @@
+services:
+  binance-us-btcusdt-collector:
+    build: /app
+    command: /entrypoint.sh
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/indexer?schema=public"
+    networks:
+      - indector
+
+networks:
+  indector: {}

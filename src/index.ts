@@ -2,8 +2,9 @@ import WebSocket from 'ws';
 import { PrismaClient } from "@prisma/client";
 //
 // const ENDPOINT = 'wss://ws-api.binance.us:443/ws-api/v3/avgPrice';
-const ENDPOINT = 'wss://stream.binance.us:9443';
-const STREAM = '/ws/btcusdt@ticker';
+const ENDPOINT:any = process.env.ENDPOINT ?? "wss://stream.binance.us:9443";
+const STREAM:string = process.env.STREAM ?? "/ws/btcusdt@ticker";
+const EXCHANGE = process.env.EXCHANGE ?? "binance.us";
 const ws = new WebSocket(ENDPOINT + STREAM);
 
 const prisma = new PrismaClient();
@@ -22,7 +23,7 @@ async function addAssetPriceRecord(record: BinanceResponse) {
 
     await prisma.assetPrice.create({
         data: {
-            exchange: 'binance.us',
+            exchange: EXCHANGE,
             symbol: record.s,
             eventTime: `${record.E}`,
             averagePrice: parseFloat(record.w),
@@ -37,7 +38,7 @@ async function addAssetPriceRecord(record: BinanceResponse) {
 
 ws.on('open', () => {
 
-    console.log('Connected to Binance.US WSS');
+    console.log(`Connected to ${process.env.EXCHANGE} WSS`);
 
 });
 
@@ -55,7 +56,7 @@ ws.on('message', (message: string) => {
 
 ws.on('close', () => {
 
-    console.log('Disconnected from BINANCE.US WSS');
+    console.log(`Disconnected from ${process.env.EXCHANGE} WSS`);
 
     prisma.$disconnect();
 

@@ -1,7 +1,7 @@
 services:
   binance-us-btcusdt-collector:
-    build: /app
-    command: /entrypoint.sh
+    build: .
+    command: ./entrypoint.sh
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

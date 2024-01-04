@@ -1,0 +1,17 @@
+will need:
+    $ createdb indexer
+
+have to manually run:
+    $ npx prisma generate
+    $ npx prisma migrate dev --name init
+
+have to manually run:
+    $ docker network create indector
+    $ docker network connect indector collector
+    $ docker network connect indector postgres
+    $ docker network connect indector adminer
+
+try with default Docker subnet (192.168.65.0)
+
+reduce npm deps
+build proper js project?

@@ -14,7 +14,7 @@ COPY ./src ./src
 COPY ./prisma ./prisma
 
 RUN apk update && apk add bash \
-    && chmod +x /entrypoint.sh
+    && chmod +x entrypoint.sh
 
 # Install node packages, install serve, build the app, and remove dependencies at the end
 #RUN npm install \
